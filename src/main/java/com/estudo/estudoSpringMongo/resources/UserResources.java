@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import com.estudo.estudoSpringMongo.domain.User;
 import com.estudo.estudoSpringMongo.dto.UserDTO;
 import com.estudo.estudoSpringMongo.services.UserService;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value="/users")
 public class UserResources {
