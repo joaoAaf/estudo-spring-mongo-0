@@ -2,7 +2,6 @@ package com.estudo.estudoSpringMongo.resources;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,37 +13,33 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.estudo.estudoSpringMongo.domain.Post;
-import com.estudo.estudoSpringMongo.domain.User;
-import com.estudo.estudoSpringMongo.dto.Admin;
-import com.estudo.estudoSpringMongo.services.UserService;
+import com.estudo.estudoSpringMongo.domain.Admin;
+import com.estudo.estudoSpringMongo.services.AdminService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value="/users")
-public class UserResources {
+@RequestMapping(value="/admins")
+public class AdminResources {
 
 	@Autowired
-	private UserService service;
+	private AdminService service;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Admin>> findAll () {
-		List<User> list = service.findAll();
-		List<Admin> listDTO = list.stream().map(x -> new Admin(x)).collect(Collectors.toList());
-		return ResponseEntity.ok().body(listDTO);
+		List<Admin> list = service.findAll();
+		return ResponseEntity.ok().body(list);
 	}
 	
 	@RequestMapping(value ="/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Admin> findById (@PathVariable String id) {
-		User user = service.findById(id);
-		return ResponseEntity.ok().body(new Admin(user));
+		Admin admin = service.findById(id);
+		return ResponseEntity.ok().body(admin);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert (@RequestBody Admin userDto){
-		User user = service.fromDTO(userDto);
-		user = service.insert(user);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
+	public ResponseEntity<Void> insert (@RequestBody Admin admin){
+		admin = service.insert(admin);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(admin.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
@@ -55,17 +50,10 @@ public class UserResources {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update (@RequestBody Admin userDto, @PathVariable String id){
-		User user = service.fromDTO(userDto);
-		user.setId(id);
-		user = service.update(user);
+	public ResponseEntity<Void> update (@RequestBody Admin admin, @PathVariable String id){
+		admin.setId(id);
+		admin = service.update(admin);
 		return ResponseEntity.noContent().build();
-	}
-	
-	@RequestMapping(value = "/{id}/posts", method = RequestMethod.GET)
-	public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
-		User user = service.findById(id);
-		return ResponseEntity.ok().body(user.getPosts());
 	}
 	
 }

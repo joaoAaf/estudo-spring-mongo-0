@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.estudo.estudoSpringMongo.domain.User;
-import com.estudo.estudoSpringMongo.dto.UserDTO;
+import com.estudo.estudoSpringMongo.dto.Admin;
 import com.estudo.estudoSpringMongo.repository.UserRepository;
 import com.estudo.estudoSpringMongo.services.exception.ObjectNotFoundException;
 
@@ -46,7 +46,7 @@ public class UserService {
 		newUser.setEmail(user.getEmail());	
 	}
 
-	public User fromDTO (UserDTO userDto) {
+	public User fromDTO (Admin userDto) {
 		return new User(userDto.getId(), userDto.getName(), userDto.getEmail());
 	}
 	

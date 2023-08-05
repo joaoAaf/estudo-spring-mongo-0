@@ -4,17 +4,17 @@ import java.io.Serializable;
 
 import com.estudo.estudoSpringMongo.domain.User;
 
-public class UserDTO implements Serializable {
+public class Admin implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private String id;
 	private String name;
 	private String email;
 	
-	public UserDTO() {
+	public Admin() {
 	}
 	
-	public UserDTO(User obj) {
+	public Admin(User obj) {
 		id = obj.getId();
 		name = obj.getName();
 		email = obj.getEmail();
